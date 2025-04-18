@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
 
 class SiteController extends Controller
 {
@@ -16,6 +17,12 @@ class SiteController extends Controller
     }
 
     public function index()
+    {
+        $user = Auth::user();
+        return view('pages.home', compact('user'));
+    }
+
+    public function weather()
     {
         $endpoint = 'https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=' . $this->api_key;
         
