@@ -17,5 +17,5 @@ Route::post('register-email', [AuthController::class, 'register_email']);
 // protecetd routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [SiteController::class, 'index']);
-    Route::get('/weather', [SiteController::class, 'weather']);
+    Route::post('/weather', [SiteController::class, 'weather']);
 });

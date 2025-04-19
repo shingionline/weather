@@ -18,7 +18,7 @@
 
 <div id="app">
     @include('layouts.top-menu')
-    <div class="pt-3">@yield('content')</div>
+    <div>@yield('content')</div>
 </div>
 
 @include('layouts.footer')
