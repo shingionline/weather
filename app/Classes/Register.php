@@ -7,15 +7,13 @@ use Illuminate\Support\Facades\Hash;
 
 class Register
 {
-    public function createUser($name, $surname, $email)
+    public function createUser($name, $surname, $email, $password)
     {
-        $new_password = bin2hex(openssl_random_pseudo_bytes(4));
-
         $user = new User;
         $user->name = $name;
         $user->surname = $surname;
         $user->email = $email;
-        $user->password = Hash::make($new_password);
+        $user->password = Hash::make($password);
         $user->email_verified_at = date('Y-m-d H:i:s');
         $user->save();
 

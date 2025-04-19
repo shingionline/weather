@@ -8,7 +8,7 @@
                 <div class="card-header normal">Login</div>
                     <div class="card-body">
 
-                  <div class="alert alert-secondary text-center" role="alert" v-if="error_message">
+                  <div class="alert alert-danger text-center" role="alert" v-if="error_message">
                         <span v-html="error_message"></span>
                     </div>
                     
@@ -19,11 +19,12 @@
                     <div v-if="!submitted"> 
                       <div class="form-group mb-3">
                         <input id="email" type="email" placeholder="Email" class="btn-block py-1 px-2" name="email" v-model="email">
+                        <input id="password" type="texxt" placeholder="Password" class="btn-block py-1 px-2" name="password" v-model="password">
                       </div>
 
                         <div class="d-grid mx-auto">
                           <div v-if="loading" class="text-center"><i class="fas fa-spinner fa-spin fa-1x"></i></div>
-                          <button v-else type="submit" class="btn btn-primary btn-block" @click="submitForm">Get login link</button>
+                          <button v-else type="submit" class="btn btn-primary btn-block" @click="submitForm">Login</button>
                         </div>
                     </div>
 
@@ -44,6 +45,7 @@ export default {
   data() {
     return {
       email: '',
+      password: '',
       error_message: null,
       success_message: null,
       loading: false,
@@ -60,18 +62,18 @@ export default {
           this.success_message = null;
 
           if (this.email=='') { this.sweetfire('Please enter email address')}
+          else if (this.password=='') { this.sweetfire('Please enter password')}
 
           else {
 
           this.loading = true;
 
           axios
-          .post('/login-post', {email: this.email})
+          .post('/login-post', {email: this.email, password: this.password})
           .then((response) => {
             
             if(response.data.success) {
-              this.success_message = response.data.message;
-              this.submitted = true;
+              window.location.href = response.data.url;
             }
 
             else {

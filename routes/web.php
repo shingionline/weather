@@ -7,7 +7,7 @@ use App\Http\Controllers\SiteController;
 // authentication
 Route::get('/', [AuthController::class, 'index'])->name('login')->middleware(['guest']);
 Route::get('login/token/{token}', [AuthController::class, 'login_token'])->middleware(['guest']);
-Route::post('logout', [AuthController::class, 'signOut'])->name('logout');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('login-post', [AuthController::class, 'login_post']);
 Route::post('security-post', [AuthController::class, 'security_post']);
 Route::get('register', [AuthController::class, 'register'])->name('register-user')->middleware(['guest']);

@@ -8,7 +8,7 @@
                 <div class="card-header normal">Register</div>
                     <div class="card-body">
 
-                        <div class="alert alert-secondary text-center" role="alert" v-if="error_message">
+                        <div class="alert alert-danger text-center" role="alert" v-if="error_message">
                         <span v-html="error_message"></span>
                         </div>
                         
@@ -28,6 +28,10 @@
 
                             <div class="form-group mb-3">
                                 <input type="text" placeholder="Email" class="btn-block py-1 px-2" v-model="email">
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <input type="text" placeholder="Password" class="btn-block py-1 px-2" v-model="password">
                             </div>
 
                             <div class="d-grid mx-auto">
@@ -56,6 +60,7 @@ export default {
       name: '',
       surname: '',
       email: '',
+      password: '',
       error_message: '',
       success_message: '',
       loading: false,
@@ -72,7 +77,7 @@ export default {
           if (this.name=='') { this.sweetfire('Please enter your name')}
           else if (this.surname=='') { this.sweetfire('Please enter your surname')}
           else if (this.email=='') { this.sweetfire('Please enter your email address')}
-          else if (this.account=='') { this.sweetfire('Account not selected')}
+          else if (this.password=='') { this.sweetfire('Please enter your password')}
 
           else {
 
@@ -82,7 +87,9 @@ export default {
           .post('/register-post', {
             name: this.name, 
             surname: this.surname, 
-            email: this.email})
+            email: this.email,
+            password: this.password,
+            })
           .then((response) => {
             
             if (response.data.success) {
