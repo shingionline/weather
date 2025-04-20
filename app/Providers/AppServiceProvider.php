@@ -30,10 +30,5 @@ class AppServiceProvider extends ServiceProvider
         if (env('APP_ENV') == 'production') {
             URL::forceScheme('https');
         }
-
-        Gate::define('viewPulse', function (User $user) {
-            return $user->account === 'Admin';
-        });
-
     }
 }
