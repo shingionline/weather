@@ -69,7 +69,7 @@ export default {
           this.loading = true;
 
           axios
-          .post('/login-post', {email: this.email, password: this.password})
+          .post('/api/login', {email: this.email, password: this.password})
           .then((response) => {
             
             if(response.data.success) {

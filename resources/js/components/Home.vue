@@ -56,7 +56,7 @@ export default {
       this.error_message = null;
 
       axios
-        .post('/weather', {
+        .post('/api/weather', {
           city: this.city,
           longitude: this.longitude,
           latitude: this.latitude,

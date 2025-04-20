@@ -24,7 +24,7 @@
                 @endguest
 
                 <form id="logout-form" 
-                action="{{ route('logout') }}" 
+                action="/logout" 
                 method="POST" 
                 class="d-none">@csrf</form>
 

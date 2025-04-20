@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-    public function index()
-    {
-        return view('auth.login');
+    public function user(Request $request) 
+    { 
+        return $request->user(); 
     }
-
-    public function login_post(Request $request)
+    
+    public function login(Request $request)
     {
         try {
             $data = $request->all();
@@ -24,8 +24,15 @@ class AuthController extends Controller
             $password = trim($data['password']);
 
             if (Auth::attempt(['email' => $email, 'password' => $password])) {
+
+                $user = User::where('email', $email)->first();
+
+                // create token
+                $token = $user->createToken('auth_token')->plainTextToken;
+
                 return response()->json([
                     'success' => true,
+                    'token' => $token,
                     'url' => '/home'
                 ]);
             } else {
@@ -34,18 +41,12 @@ class AuthController extends Controller
                     'message' => 'Incorrect login details'
                 ]);
             }
-            
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
 
-    public function register()
-    {
-        return view('auth.register');
-    }
-
-    public function register_post(Request $request)
+    public function register(Request $request)
     {
         try {
             $data = $request->all();
@@ -70,8 +71,12 @@ class AuthController extends Controller
             // login the user
             Auth::login($user);
 
+            // create token
+            $token = $user->createToken('auth_token')->plainTextToken;
+
             return response()->json([
                 'success' => true,
+                'token' => $token,
                 'url' => '/home'
             ]);
         } catch (Exception $e) {
@@ -79,11 +84,17 @@ class AuthController extends Controller
         }
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        Session::flush();
-        Auth::logout();
-
-        return Redirect('/');
+        try { 
+            Session::flush();
+            $request->user()->tokens()->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Logged out successfully'
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
 }
