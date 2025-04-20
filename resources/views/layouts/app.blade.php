@@ -17,7 +17,7 @@
 <script>0</script>
 
 <div id="app">
-    @include('layouts.top-menu')
+    @include('layouts.top-menu-backup')
     <div>@yield('content')</div>
 </div>
 
