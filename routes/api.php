@@ -18,7 +18,7 @@ Route::prefix('v1')->group(function () {
             Route::post('/weather', [WeatherController::class, 'weather']);
             Route::post('/forecast', [WeatherController::class, 'forecast']);
             Route::post('/history', [WeatherController::class, 'history']);
-            Route::post('/direct', [WeatherController::class, 'direct']);
+            Route::post('/search', [WeatherController::class, 'search']);
         });
 
     });

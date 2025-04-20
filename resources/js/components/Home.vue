@@ -2,7 +2,7 @@
 <div class="container py-3">
 <div class="text-center">Hello {{ user.name }} 👋</div>
 
-<div class="row pt-2 pb-3">
+<div class="row pt-2 pb-2">
   <div class="col-md-3">
     <div><b>City</b></div>
     <input id="city" type="text" class="btn-block py-1 px-2" name="city" v-model="city"></div>
@@ -18,16 +18,13 @@
     </div>
 </div>
 
-<div class="row pt-2">
-  <div class="col">
-    <button type="submit" class="btn btn-primary btn-block" @click="getWeatherForecast()">Get Weather & Forecast</button>
-    </div>
-</div>
-
-<div class="row pt-2 pb-2">
-  <div class="col">
-    <button type="submit" class="btn btn-success btn-block" @click="getHistory()">Get History</button>
-    </div>
+<div class="row pb-3">
+  <div class="col-md-3">
+    <div><b>Search Term</b></div>
+    <input id="searchTerm" type="text" class="btn-block py-1 px-2" name="searchTerm" v-model="searchTerm"></div>
+<div class="col-md-3 pt-3"><button type="submit" class="btn btn-primary btn-block" @click="getWeatherForecast()">Get Weather & Forecast</button></div>
+<div class="col-md-3 pt-3"><button type="submit" class="btn btn-success btn-block" @click="getHistory()">Get History</button></div>
+<div class="col-md-3 pt-3"><button type="submit" class="btn btn-warning btn-block" @click="searchQuery()">Direct Search</button></div>
 </div>
 
 <div class="alert alert-danger text-center" role="alert" v-if="error_message">
@@ -52,6 +49,12 @@
   {{history}}
   </div>
 
+<div v-if="loading_search" class="text-center my-4"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
+<div v-else-if="searchResults" class="mt-2 mb-4">
+  <h3>Search results for <b>{{searchTerm}}</b></h3>
+  {{searchResults}}
+  </div>
+
 </div>
 </template>
 
@@ -64,9 +67,12 @@ export default {
       weather: null,
       forecast: null,
       history: null,
+      searchResults: null,
       loading_weather: false,
       loading_forecast: false,
       loading_history: false,
+      loading_search: false,
+      searchTerm: 'cape',
       city: 'Pretoria',
       longitude: '28.1878',
       latitude: '-25.7449',
@@ -81,6 +87,7 @@ export default {
       this.weather = null;
       this.forecast = null;
       this.history = null;
+      this.searchResults = null;
       this.error_message = null;
       this.getWeather();
       this.getForecast();
@@ -132,6 +139,7 @@ getHistory() {
   this.history = null;
   this.weather = null;
   this.forecast = null;
+  this.searchResults = null;
   this.error_message = null;
 
   this.loading_history = true;
@@ -202,6 +210,49 @@ getHistory() {
         .catch((error) => {
 
           this.loading_forecast = false;
+
+          if (error.response) {
+            if (error.response.status === 429) {
+              this.error_message = error.response.data?.message || "Too many requests. Please try again later.";
+            } else {
+              this.error_message = error.response.data?.message || "An error occurred.";
+            }
+          } else {
+            this.error_message = "Unable to connect to the server.";
+          }
+      });
+    },
+
+    searchQuery() {
+
+      const auth_token = localStorage.getItem('auth_token') ?? null;
+      
+      this.forecast = null;
+      this.history = null;
+      this.loading_search = true;
+      this.error_message = null;
+
+      axios
+        .post('/api/v1/search', {
+          searchTerm: this.searchTerm,
+        }, {
+          headers: {
+            'Authorization': 'Bearer ' + auth_token,
+          }
+        })
+        .then((response) => {
+          if (response.data.success) {
+            this.searchResults = response.data.data;
+          }
+          else {
+            this.error_message = response.data.message;
+          }
+
+          this.loading_search = false;
+        })
+        .catch((error) => {
+
+          this.loading_search = false;
 
           if (error.response) {
             if (error.response.status === 429) {

@@ -136,22 +136,21 @@ class WeatherController extends Controller
         }
     }
 
-    public function direct(Request $request)
+    public function search(Request $request)
     {
         try {
 
-            $city = $request->city ?? null;
-            $longitude = $request->longitude ?? null;
-            $latitude = $request->latitude ?? null;
+            $searchTerm = $request->searchTerm ?? null;
+            $limit = 5;
 
-            if (!$city && !$longitude && !$latitude) {
+            if (!$searchTerm) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Please provide a city or coordinates'
+                    'message' => 'Please enter a search term'
                 ]);
             }
 
-            $endpoint = 'https://api.openweathermap.org/data/2.5/forecast?q='.$city.'&APPID=' . $this->api_key;
+            $endpoint = 'https://api.openweathermap.org/geo/1.0/direct?q='.$searchTerm.'&limit='.$limit.'&appid=' . $this->api_key;
             
             $response = $this->client->get($endpoint);
             $data = json_decode($response->getBody(), true);
