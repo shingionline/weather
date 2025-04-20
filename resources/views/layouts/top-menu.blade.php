@@ -42,9 +42,7 @@
     <messages-top :user="{{ auth()->user() }}" icon="fa-bell" category="notifications" event="NewNotification" update="UpdateNotification"></messages-top> -->
 
                         <li class="nav-item dropdown">
-
-                        <avatar :person="{{ auth()->user() }}"></avatar>
-
+                            <avatar :person="{{ auth()->user() }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></avatar>
                                 <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="navbarDropdown">
                                 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
