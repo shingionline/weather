@@ -35,6 +35,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        RateLimiter::for('rate-limit', function ($request) {
+            return Limit::perHour(env('API_REQUESTS_PER_HOUR'))->by('global-rate-limit');
+        });
+
         $this->configureRateLimiting();
 
         $this->routes(function () {

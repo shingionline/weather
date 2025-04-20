@@ -10,9 +10,14 @@ Route::prefix('v1')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
 
     Route::middleware('auth:sanctum')->group(function () {
+
         Route::get('/user', [AuthController::class, 'user']);
         Route::post('logout', [AuthController::class, 'logout']);
-        Route::post('/weather', [WeatherController::class, 'weather']);
+
+        Route::middleware('throttle:rate-limit')->group(function () {
+            Route::post('/weather', [WeatherController::class, 'weather']);
+        });
+
     });
 
 });
