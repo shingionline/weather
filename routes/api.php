@@ -16,6 +16,9 @@ Route::prefix('v1')->group(function () {
 
         Route::middleware('throttle:rate-limit')->group(function () {
             Route::post('/weather', [WeatherController::class, 'weather']);
+            Route::post('/forecast', [WeatherController::class, 'forecast']);
+            Route::post('/history', [WeatherController::class, 'history']);
+            Route::post('/direct', [WeatherController::class, 'direct']);
         });
 
     });

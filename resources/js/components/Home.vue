@@ -1,29 +1,56 @@
 <template>
 <div class="container py-3">
-<div>Hello {{ user.name }}</div>
-<div class="row pt-2">
-  <div class="col"><b>City</b></div>
-  <div class="col"><b>Longitude</b></div>
-  <div class="col"><b>Latitude</b></div>
-  <div class="col"></div>
-</div>
+<div class="text-center">Hello {{ user.name }} 👋</div>
+
 <div class="row pt-2 pb-3">
-  <div class="col">
+  <div class="col-md-3">
+    <div><b>City</b></div>
     <input id="city" type="text" class="btn-block py-1 px-2" name="city" v-model="city"></div>
-  <div class="col">
+  <div class="col-md-3">
+    <div><b>Longitude</b></div>
     <input id="city" type="text" class="btn-block py-1 px-2" name="longitude" v-model="longitude"></div>
-  <div class="col">
+  <div class="col-md-3">
+    <div><b>Latitude</b></div>
     <input id="city" type="text" class="btn-block py-1 px-2" name="latitude" v-model="latitude"></div>
+  <div class="col-md-3">
+    <div><b>Date & Time</b></div>
+    <input id="datestring" type="datetime-local" class="btn-block py-1 px-2" name="datestring" v-model="datestring" />
+    </div>
+</div>
+
+<div class="row pt-2">
   <div class="col">
-    <button type="submit" class="btn btn-primary btn-block" @click="getWeather()">Get Weather</button></div>
+    <button type="submit" class="btn btn-primary btn-block" @click="getWeatherForecast()">Get Weather & Forecast</button>
+    </div>
+</div>
+
+<div class="row pt-2 pb-2">
+  <div class="col">
+    <button type="submit" class="btn btn-success btn-block" @click="getHistory()">Get History</button>
+    </div>
 </div>
 
 <div class="alert alert-danger text-center" role="alert" v-if="error_message">
     <span v-html="error_message"></span>
 </div>
 
-<div v-if="loading" class="text-center"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
-<div v-else>{{weather}}</div>
+<div v-if="loading_weather" class="text-center"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
+<div v-else-if="weather">
+  <h3>Weather</h3>
+  {{weather}}
+  </div>
+
+<div v-if="loading_forecast" class="text-center my-4"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
+<div v-else-if="forecast" class="my-4">
+  <h3>Forecast</h3>
+  {{forecast}}
+  </div>
+
+<div v-if="loading_history" class="text-center my-4"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
+<div v-else-if="history" class="mt-2 mb-4">
+  <h3>History</h3>
+  {{history}}
+  </div>
 
 </div>
 </template>
@@ -35,30 +62,125 @@ export default {
   data() {
     return {
       weather: null,
-      loading: false,
-      city: null,
-      longitude: null,
-      latitude: null,
+      forecast: null,
+      history: null,
+      loading_weather: false,
+      loading_forecast: false,
+      loading_history: false,
+      city: 'Pretoria',
+      longitude: '28.1878',
+      latitude: '-25.7449',
+      datestring: '2025-04-01T19:57',
       error_message: null,
     };
   },
 
-  created() {
-    this.getWeather();
-  },
-
   methods: {
 
+    getWeatherForecast() {
+      this.weather = null;
+      this.forecast = null;
+      this.history = null;
+      this.error_message = null;
+      this.getWeather();
+      this.getForecast();
+    },
+
     getWeather() {
+  const auth_token = localStorage.getItem('auth_token') ?? null;
+
+  
+  this.loading_weather = true;
+
+  axios
+    .post('/api/v1/weather', {
+      city: this.city,
+      longitude: this.longitude,
+      latitude: this.latitude,
+    }, {
+      headers: {
+        'Authorization': 'Bearer ' + auth_token,
+      }
+    })
+    .then((response) => {
+      if (response.data.success) {
+        this.weather = response.data.data;
+      } else {
+        this.error_message = response.data.message;
+      }
+
+      this.loading_weather = false;
+    })
+    .catch((error) => {
+      this.loading_weather = false;
+
+      if (error.response) {
+        if (error.response.status === 429) {
+          this.error_message = error.response.data?.message || "Too many requests. Please try again later.";
+        } else {
+          this.error_message = error.response.data?.message || "An error occurred.";
+        }
+      } else {
+        this.error_message = "Unable to connect to the server.";
+      }
+    });
+},
+
+getHistory() {
+  const auth_token = localStorage.getItem('auth_token') ?? null;
+
+  this.history = null;
+  this.weather = null;
+  this.forecast = null;
+  this.error_message = null;
+
+  this.loading_history = true;
+
+  axios
+    .post('/api/v1/history', {
+      datestring: this.datestring,
+      longitude: this.longitude,
+      latitude: this.latitude,
+    }, {
+      headers: {
+        'Authorization': 'Bearer ' + auth_token,
+      }
+    })
+    .then((response) => {
+      if (response.data.success) {
+        this.history = response.data.data;
+      } else {
+        this.error_message = response.data.message;
+      }
+
+      this.loading_history = false;
+    })
+    .catch((error) => {
+      this.loading_history = false;
+
+      if (error.response) {
+        if (error.response.status === 429) {
+          this.error_message = error.response.data?.message || "Too many requests. Please try again later.";
+        } else {
+          this.error_message = error.response.data?.message || "An error occurred.";
+        }
+      } else {
+        this.error_message = "Unable to connect to the server.";
+      }
+    });
+},
+
+
+    getForecast() {
 
       const auth_token = localStorage.getItem('auth_token') ?? null;
       
-      this.weather = null;
-      this.loading = true;
+      this.forecast = null;
+      this.loading_forecast = true;
       this.error_message = null;
 
       axios
-        .post('/api/v1/weather', {
+        .post('/api/v1/forecast', {
           city: this.city,
           longitude: this.longitude,
           latitude: this.latitude,
@@ -69,17 +191,28 @@ export default {
         })
         .then((response) => {
           if (response.data.success) {
-            this.weather = response.data.data;
+            this.forecast = response.data.data;
           }
           else {
             this.error_message = response.data.message;
           }
 
-          this.loading = false;
+          this.loading_forecast = false;
         })
-        .catch(function () {
-          this.loading = false;
-        });
+        .catch((error) => {
+
+          this.loading_forecast = false;
+
+          if (error.response) {
+            if (error.response.status === 429) {
+              this.error_message = error.response.data?.message || "Too many requests. Please try again later.";
+            } else {
+              this.error_message = error.response.data?.message || "An error occurred.";
+            }
+          } else {
+            this.error_message = "Unable to connect to the server.";
+          }
+      });
     },
 
   },
