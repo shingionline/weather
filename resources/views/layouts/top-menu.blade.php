@@ -17,14 +17,14 @@
                 <li class="nav-item"><a class="navigation-link item logged mr-2" href="/register">Register</a></li>
 
                 @else
-                <li class="nav-item"><a class="navigation-link item logged" href="{{ route('logout') }}"
+                <li class="nav-item"><a class="navigation-link item logged" href="/web-logout"
                         onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">Logout</a></li>
 
                 @endguest
 
                 <form id="logout-form" 
-                action="/logout" 
+                action="/web-logout" 
                 method="POST" 
                 class="d-none">@csrf</form>
 

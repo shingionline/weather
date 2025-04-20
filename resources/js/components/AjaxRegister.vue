@@ -84,7 +84,7 @@ export default {
           this.loading = true;
 
           axios
-          .post('/api/register', {
+          .post('/api/v1/register', {
             name: this.name, 
             surname: this.surname, 
             email: this.email,

@@ -50,16 +50,22 @@ export default {
   methods: {
 
     getWeather() {
+
+      const auth_token = localStorage.getItem('auth_token') ?? null;
       
       this.weather = null;
       this.loading = true;
       this.error_message = null;
 
       axios
-        .post('/api/weather', {
+        .post('/api/v1/weather', {
           city: this.city,
           longitude: this.longitude,
           latitude: this.latitude,
+        }, {
+          headers: {
+            'Authorization': 'Bearer ' + auth_token,
+          }
         })
         .then((response) => {
           if (response.data.success) {

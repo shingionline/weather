@@ -3,6 +3,6 @@
   onclick="event.preventDefault(); 
   document.getElementById('logout-form').submit();">Logout</a>
 <form id="logout-form" 
-  action="/logout" 
+  action="/web-logout" 
   method="POST" 
   class="d-none">@csrf</form>

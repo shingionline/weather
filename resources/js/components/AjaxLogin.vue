@@ -17,9 +17,13 @@
                     </div>
 
                     <div v-if="!submitted"> 
+
                       <div class="form-group mb-3">
                         <input id="email" type="email" placeholder="Email" class="btn-block py-1 px-2" name="email" v-model="email">
-                        <input id="password" type="texxt" placeholder="Password" class="btn-block py-1 px-2" name="password" v-model="password">
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <input id="password" type="text" placeholder="Password" class="btn-block py-1 px-2" name="password" v-model="password">
                       </div>
 
                         <div class="d-grid mx-auto">
@@ -51,6 +55,7 @@ export default {
       loading: false,
       showPassword: false,
       submitted: false,
+      auth_token: null,
     };
   },
 
@@ -69,7 +74,33 @@ export default {
           this.loading = true;
 
           axios
-          .post('/api/login', {email: this.email, password: this.password})
+          .post('/api/v1/login', {email: this.email, password: this.password})
+          .then((response) => {
+            
+            if(response.data.success) {
+
+              this.auth_token = response.data.token;
+
+              // store the token in local storage
+              localStorage.setItem('auth_token', this.auth_token);
+
+              this.webLogin();
+            }
+
+            else {
+              this.error_message = response.data.message;
+              this.loading = false;
+            }
+
+          });
+
+          }
+      },
+
+      webLogin() {
+
+          axios
+          .post('/web-login', {auth_token: this.auth_token})
           .then((response) => {
             
             if(response.data.success) {
@@ -78,14 +109,12 @@ export default {
 
             else {
               this.error_message = response.data.message;
+              this.loading = false;
             }
-            
-            this.loading = false;
 
           });
 
-          }
-      },
+        },
 
 
     sweetfire(text) {
