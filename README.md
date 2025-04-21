@@ -33,15 +33,12 @@ A Laravel-based weather dashboard and API platform with user authentication, rat
    docker-compose up -d
    ```
 
-> The dashboard will be available at: **http://localhost:8000**
+> The dashboard will be available on **http://localhost:8000**
 
----
 
 ## 🔐 Authentication
 
 Visit the dashboard and either **register** or **login** with your account to access weather data.
-
----
 
 ## 📬 API Endpoints
 
@@ -55,8 +52,6 @@ Use the provided **Postman collection** to test the API:
 - `GET  /api/v1/user`
 - `POST /api/v1/register`
 - `POST /api/v1/logout`
-
----
 
 ## 🌟 Features
 
@@ -72,8 +67,6 @@ Use the provided **Postman collection** to test the API:
 - ✅ Uses **.env** for configuration
 - ✅ **HTTPS & secure headers** (production only)
 - ✅ **Dockerized** setup with `docker-compose.yml`
-
----
 
 ## ⛔ Not Implemented (Due to Time Constraints)
 
