@@ -2,8 +2,6 @@
 
 A Laravel-based weather dashboard and API platform with user authentication, rate limiting, and caching.
 
----
-
 ## 🚀 Installation
 
 1. Clone the repository:
