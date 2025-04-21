@@ -43,10 +43,10 @@ Visit the dashboard and either **register** or **login** with your account to ac
 Use the provided **Postman collection** to test the API:
 
 - `POST /api/v1/login`
-- `POST  /api/v1/weather`
-- `POST  /api/v1/forecast`
-- `POST  /api/v1/history`
-- `POST  /api/v1/search`
+- `POST /api/v1/weather`
+- `POST /api/v1/forecast`
+- `POST /api/v1/history`
+- `POST /api/v1/search`
 - `GET  /api/v1/user`
 - `POST /api/v1/register`
 - `POST /api/v1/logout`
