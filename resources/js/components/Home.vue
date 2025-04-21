@@ -37,7 +37,12 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-6">
-          <h2 class="card-title">{{ weather.name }}, {{ weather.sys.country }}</h2>
+          <h2 class="card-title">
+            <img :src="`https://flagcdn.com/w20/${weather.sys.country.toLowerCase()}.png`" 
+                 :alt="weather.sys.country"
+                 class="country-flag">
+            {{ weather.name }}, {{ weather.sys.country }}
+          </h2>
           <div class="d-flex align-items-center">
             <img :src="`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`" alt="Weather icon">
             <div>
@@ -325,9 +330,7 @@ getHistory() {
 }
 
 .weather-card img {
-  width: 100px;
-  height: 100px;
-  margin-right: 15px;
+  margin-right: 5px;
 }
 
 .weather-details {
@@ -348,5 +351,13 @@ getHistory() {
 
 .text-capitalize {
   text-transform: capitalize;
+}
+
+.country-flag {
+  width: 20px;
+  height: 14px;
+  margin-right: 10px;
+  vertical-align: middle;
+  border: 1px solid #dee2e6;
 }
 </style>
