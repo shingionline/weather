@@ -81,10 +81,35 @@
 </div>
 
 <div v-if="loading_forecast" class="text-center my-4"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
-<div v-else-if="forecast" class="my-4">
-  <h5>Forecast</h5>
-  {{forecast}}
+<div v-else-if="forecast" class="forecast-section my-4">
+<h5>5-Day Forecast</h5>
+  <div class="forecast-scroll-container">
+    <div class="forecast-container">
+      <div v-for="(item, index) in forecast.list" :key="index" class="forecast-card">
+        <div class="forecast-time">
+          <div class="forecast-day">{{ formatDay(item.dt_txt) }}</div>
+          <div class="forecast-date">{{ formatDate(item.dt_txt) }}</div>
+          <div class="forecast-hour">{{ formatTime(item.dt_txt) }}</div>
+        </div>
+        <img :src="`https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`" 
+             :alt="item.weather[0].description"
+             class="forecast-icon">
+        <div class="forecast-temp">{{ Math.round(item.main.temp - 273.15) }}°C</div>
+        <div class="forecast-desc text-capitalize">{{ item.weather[0].description }}</div>
+        <div class="forecast-details">
+          <div class="detail-item">
+            <i class="fas fa-tint"></i>
+            <span>{{ item.main.humidity }}%</span>
+          </div>
+          <div class="detail-item">
+            <i class="fas fa-wind"></i>
+            <span>{{ item.wind.speed }} m/s</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
 <div v-if="loading_history" class="text-center my-4"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
 <div v-else-if="history" class="mt-2 mb-4">
@@ -309,6 +334,19 @@ getHistory() {
       });
     },
 
+    formatTime(dt_txt) {
+      const date = new Date(dt_txt);
+      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    },
+    formatDay(dt_txt) {
+      const date = new Date(dt_txt);
+      return date.toLocaleDateString([], { weekday: 'short' });
+    },
+    formatDate(dt_txt) {
+      const date = new Date(dt_txt);
+      return date.toLocaleDateString([], { month: 'short', day: 'numeric' });
+    },
+
   },
 
 }
@@ -359,5 +397,94 @@ getHistory() {
   margin-right: 10px;
   vertical-align: middle;
   border: 1px solid #dee2e6;
+}
+
+.forecast-section {
+  position: relative;
+}
+
+.forecast-header {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: white;
+  padding-right: 20px;
+}
+
+.forecast-scroll-container {
+  overflow-x: auto;
+  padding: 10px 0;
+  margin-left: -20px;
+  padding-left: 20px;
+}
+
+.forecast-container {
+  display: flex;
+  gap: 15px;
+  padding: 10px;
+  min-width: min-content;
+}
+
+.forecast-card {
+  min-width: 150px;
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.forecast-time {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.forecast-day {
+  font-size: 1.1em;
+  color: #333;
+}
+
+.forecast-date {
+  font-size: 0.9em;
+  color: #666;
+  margin: 2px 0;
+}
+
+.forecast-hour {
+  font-size: 0.8em;
+  color: #888;
+}
+
+.forecast-icon {
+  width: 50px;
+  height: 50px;
+  margin: 5px 0;
+}
+
+.forecast-temp {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.forecast-desc {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.forecast-details {
+  font-size: 0.8em;
+  color: #666;
+}
+
+.forecast-details .detail-item {
+  margin: 5px 0;
+  justify-content: center;
+}
+
+.forecast-details .detail-item i {
+  width: 20px;
+  margin-right: 5px;
 }
 </style>
