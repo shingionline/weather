@@ -19,11 +19,11 @@
                     <div v-if="!submitted"> 
 
                       <div class="form-group mb-3">
-                        <input id="email" type="email" placeholder="Email" class="btn-block py-1 px-2" name="email" v-model="email">
+                        <input id="email" type="email" placeholder="Email" class="btn-block py-2 px-2" name="email" v-model="email">
                       </div>
 
                       <div class="form-group mb-3">
-                        <input id="password" type="text" placeholder="Password" class="btn-block py-1 px-2" name="password" v-model="password">
+                        <input id="password" type="text" placeholder="Password" class="btn-block py-2 px-2" name="password" v-model="password">
                       </div>
 
                         <div class="d-grid mx-auto">

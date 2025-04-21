@@ -8,7 +8,6 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-
 class WeatherController extends Controller
 {
     protected $api_key;

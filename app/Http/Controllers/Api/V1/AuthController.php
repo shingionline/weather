@@ -13,7 +13,8 @@ use App\Http\Controllers\Controller;
 class AuthController extends Controller
 {
     public function user(Request $request) 
-    { 
+    {   
+        // get user info
         return $request->user(); 
     }
     
@@ -24,6 +25,7 @@ class AuthController extends Controller
             $email = trim($data['email']);
             $password = trim($data['password']);
 
+            // try to login
             if (Auth::attempt(['email' => $email, 'password' => $password])) {
 
                 $user = User::where('email', $email)->first();

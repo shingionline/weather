@@ -18,20 +18,20 @@
                           
                           <div v-if="!submitted">
                             <div class="form-group mb-3">
-                                <input type="text" placeholder="Name" class="btn-block py-1 px-2" v-model="name">
+                                <input type="text" placeholder="Name" class="btn-block py-2 px-2" v-model="name">
                             </div>
 
                             <div class="form-group mb-3">
-                                <input type="text" placeholder="Surname" class="btn-block py-1 px-2" v-model="surname">
+                                <input type="text" placeholder="Surname" class="btn-block py-2 px-2" v-model="surname">
 
                             </div>
 
                             <div class="form-group mb-3">
-                                <input type="text" placeholder="Email" class="btn-block py-1 px-2" v-model="email">
+                                <input type="text" placeholder="Email" class="btn-block py-2 px-2" v-model="email">
                             </div>
 
                             <div class="form-group mb-3">
-                                <input type="text" placeholder="Password" class="btn-block py-1 px-2" v-model="password">
+                                <input type="text" placeholder="Password" class="btn-block py-2 px-2" v-model="password">
                             </div>
 
                             <div class="d-grid mx-auto">

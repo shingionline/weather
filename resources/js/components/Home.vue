@@ -5,26 +5,26 @@
 <div class="row pt-2 pb-2">
   <div class="col-md-3">
     <div><b>City</b></div>
-    <input id="city" type="text" class="btn-block py-1 px-2" name="city" v-model="city"></div>
+    <input id="city" type="text" class="btn-block py-2 px-2" name="city" v-model="city"></div>
   <div class="col-md-3">
     <div><b>Longitude</b></div>
-    <input id="city" type="text" class="btn-block py-1 px-2" name="longitude" v-model="longitude"></div>
+    <input id="city" type="text" class="btn-block py-2 px-2" name="longitude" v-model="longitude"></div>
   <div class="col-md-3">
     <div><b>Latitude</b></div>
-    <input id="city" type="text" class="btn-block py-1 px-2" name="latitude" v-model="latitude"></div>
+    <input id="city" type="text" class="btn-block py-2 px-2" name="latitude" v-model="latitude"></div>
   <div class="col-md-3">
     <div><b>Date & Time</b></div>
-    <input id="datestring" type="datetime-local" class="btn-block py-1 px-2" name="datestring" v-model="datestring" />
+    <input id="datestring" type="datetime-local" class="btn-block py-2 px-2" name="datestring" v-model="datestring" />
     </div>
 </div>
 
 <div class="row pb-3">
   <div class="col-md-3">
     <div><b>Search Term</b></div>
-    <input id="searchTerm" type="text" class="btn-block py-1 px-2" name="searchTerm" v-model="searchTerm"></div>
-<div class="col-md-3 pt-3"><button type="submit" class="btn btn-primary btn-block" @click="getWeatherForecast()">Get Weather & Forecast</button></div>
-<div class="col-md-3 pt-3"><button type="submit" class="btn btn-success btn-block" @click="getHistory()">Get History</button></div>
-<div class="col-md-3 pt-3"><button type="submit" class="btn btn-warning btn-block" @click="searchQuery()">Direct Search</button></div>
+    <input id="searchTerm" type="text" class="btn-block py-2 px-2" name="searchTerm" v-model="searchTerm"></div>
+<div class="col-md-3 pt-4"><button type="submit" class="btn btn-primary btn-block" @click="getWeatherForecast()">Weather & Forecast</button></div>
+<div class="col-md-3 pt-4"><button type="submit" class="btn btn-success btn-block" @click="getHistory()">History</button></div>
+<div class="col-md-3 pt-4"><button type="submit" class="btn btn-dark btn-block" @click="searchQuery()">Search</button></div>
 </div>
 
 <div class="alert alert-danger text-center" role="alert" v-if="error_message">
@@ -33,25 +33,25 @@
 
 <div v-if="loading_weather" class="text-center"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
 <div v-else-if="weather">
-  <h3>Weather</h3>
+  <h5>Weather</h5>
   {{weather}}
   </div>
 
 <div v-if="loading_forecast" class="text-center my-4"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
 <div v-else-if="forecast" class="my-4">
-  <h3>Forecast</h3>
+  <h5>Forecast</h5>
   {{forecast}}
   </div>
 
 <div v-if="loading_history" class="text-center my-4"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
 <div v-else-if="history" class="mt-2 mb-4">
-  <h3>History</h3>
+  <h5>History</h5>
   {{history}}
   </div>
 
 <div v-if="loading_search" class="text-center my-4"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
 <div v-else-if="searchResults" class="mt-2 mb-4">
-  <h3>Search results for <b>{{searchTerm}}</b></h3>
+  <h5>Search results for <b>{{searchTerm}}</b></h5>
   {{searchResults}}
   </div>
 
