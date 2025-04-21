@@ -2,8 +2,6 @@
 
 A Laravel-based weather dashboard and API platform with user authentication, rate limiting, and caching.
 
-## 🖼️ Screenshot
-
 ![Weather App Screenshot](https://res.cloudinary.com/web900/image/upload/v1745230615/files/avqyxl4z0vezcbi5czbo.png)
 
 
