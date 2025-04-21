@@ -7,29 +7,29 @@ A Laravel-based weather dashboard and API platform with user authentication, rat
 
 ## 🚀 Installation
 
-1. Clone the repository:
+1. Clone the repository
    ```bash
    git clone https://github.com/shingionline/weather.git
    cd weather
    ```
 
-2. Install PHP dependencies:
+2. Install PHP dependencies
    ```bash
    composer install
    ```
 
-3. Install Node dependencies:
+3. Install Node dependencies
    ```bash
    npm install
    npm run dev
    ```
 
-4. Run migrations:
+4. Run migrations
    ```bash
    php artisan migrate
    ```
 
-5. Start the app using Docker:
+5. Start the app using Docker
    ```bash
    docker-compose up -d
    ```
@@ -48,7 +48,7 @@ A Laravel-based weather dashboard and API platform with user authentication, rat
 
 ## 📬 API Endpoints
 
-Use the provided **Postman collection** to test the API:
+Use the provided **Postman collection** to test the API
 
 - `POST /api/v1/login`
 - `POST /api/v1/weather`
