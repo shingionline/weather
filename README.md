@@ -70,7 +70,7 @@ Use the provided **Postman collection** to test the API:
 - ✅ **User authentication**
 - ✅ **Versioned API**
 - ✅ **Postman collection** included
-- ✅ Uses **.env** for configuration
+- ✅ Uses **.env** to secure environment variables
 - ✅ **HTTPS & secure headers** (production only)
 - ✅ **Dockerized** setup with `docker-compose.yml`
 
