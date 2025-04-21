@@ -32,10 +32,48 @@
 </div>
 
 <div v-if="loading_weather" class="text-center"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
-<div v-else-if="weather">
-  <h5>Weather</h5>
-  {{weather}}
+<div v-else-if="weather" class="weather-card">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h2 class="card-title">{{ weather.name }}, {{ weather.sys.country }}</h2>
+          <div class="d-flex align-items-center">
+            <img :src="`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`" alt="Weather icon">
+            <div>
+              <h3 class="mb-0">{{ Math.round(weather.main.temp - 273.15) }}°C</h3>
+              <p class="text-capitalize">{{ weather.weather[0].description }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="weather-details">
+            <div class="detail-item">
+              <i class="fas fa-temperature-high"></i>
+              <span>Feels like: {{ Math.round(weather.main.feels_like - 273.15) }}°C</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-tint"></i>
+              <span>Humidity: {{ weather.main.humidity }}%</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-wind"></i>
+              <span>Wind: {{ weather.wind.speed }} m/s</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-compress-arrows-alt"></i>
+              <span>Pressure: {{ weather.main.pressure }} hPa</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-eye"></i>
+              <span>Visibility: {{ weather.visibility / 1000 }} km</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
 <div v-if="loading_forecast" class="text-center my-4"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
 <div v-else-if="forecast" class="my-4">
@@ -271,3 +309,44 @@ getHistory() {
 }
 
 </script>
+
+<style scoped>
+.weather-card {
+  margin: 20px 0;
+}
+
+.weather-card .card {
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.weather-card .card-body {
+  padding: 20px;
+}
+
+.weather-card img {
+  width: 100px;
+  height: 100px;
+  margin-right: 15px;
+}
+
+.weather-details {
+  margin-top: 20px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.detail-item i {
+  width: 30px;
+  color: #6c757d;
+  margin-right: 10px;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+</style>
