@@ -38,6 +38,11 @@ A Laravel-based weather dashboard and API platform with user authentication, rat
 
 Visit the dashboard and either **register** or **login** with your account to access weather data.
 
+## 📥 Postman Collection
+
+[Download Postman Collection](https://res.cloudinary.com/web900/raw/upload/v1745228547/files/yeyweaccefxjmfndryzp.json)
+
+
 ## 📬 API Endpoints
 
 Use the provided **Postman collection** to test the API:
