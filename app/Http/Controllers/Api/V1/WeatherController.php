@@ -147,7 +147,7 @@ class WeatherController extends Controller
         try {
 
             $searchTerm = $request->searchTerm ?? null;
-            $limit = 5;
+            $limit = 12;
 
             if (!$searchTerm) {
                 return response()->json([

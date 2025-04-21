@@ -140,10 +140,6 @@
               <i class="fas fa-clock"></i>
               <span>{{ formatHistoryTime(history.data[0].dt) }}</span>
             </div>
-            <div class="detail-item">
-              <i class="fas fa-globe"></i>
-              <span>{{ history.timezone }}</span>
-            </div>
           </div>
         </div>
         <div class="col-md-6">
@@ -185,9 +181,32 @@
 
 <div v-if="loading_search" class="text-center my-4"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
 <div v-else-if="searchResults" class="mt-2 mb-4">
-  <h5>Search results for <b>{{searchTerm}}</b></h5>
-  {{searchResults}}
+  <h5 class="mb-3">Search results for <b>{{searchTerm}}</b></h5>
+  <div class="search-results">
+    <div v-for="(result, index) in searchResults" :key="index" class="search-card">
+      <div class="search-card-header">
+        <img :src="`https://flagcdn.com/w20/${result.country.toLowerCase()}.png`" 
+             :alt="result.country"
+             class="country-flag">
+        <h6 class="mb-0">{{ result.name }}</h6>
+      </div>
+      <div class="search-card-body">
+        <div class="detail-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Location: {{ result.lat }}°N, {{ result.lon }}°E</span>
+        </div>
+        <div class="detail-item">
+          <i class="fas fa-globe"></i>
+          <span>Country: {{ result.country }}</span>
+        </div>
+        <div v-if="result.state" class="detail-item">
+          <i class="fas fa-map"></i>
+          <span>State/Region: {{ result.state }}</span>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
 </div>
 </template>
@@ -206,8 +225,8 @@ export default {
       loading_forecast: false,
       loading_history: false,
       loading_search: false,
-      searchTerm: 'cape',
-      city: 'Pretoria',
+      searchTerm: 'port elizabeth',
+      city: 'pretoria',
       longitude: '28.1878',
       latitude: '-25.7449',
       datestring: '2025-04-01T19:57',
@@ -218,11 +237,7 @@ export default {
   methods: {
 
     getWeatherForecast() {
-      this.weather = null;
-      this.forecast = null;
-      this.history = null;
-      this.searchResults = null;
-      this.error_message = null;
+      this.clearAll();
       this.getWeather();
       this.getForecast();
     },
@@ -270,11 +285,7 @@ export default {
 getHistory() {
   const auth_token = localStorage.getItem('auth_token') ?? null;
 
-  this.history = null;
-  this.weather = null;
-  this.forecast = null;
-  this.searchResults = null;
-  this.error_message = null;
+  this.clearAll();
 
   this.loading_history = true;
 
@@ -317,9 +328,9 @@ getHistory() {
 
       const auth_token = localStorage.getItem('auth_token') ?? null;
       
-      this.forecast = null;
+      this.clearAll();
+
       this.loading_forecast = true;
-      this.error_message = null;
 
       axios
         .post('/api/v1/forecast', {
@@ -361,10 +372,9 @@ getHistory() {
 
       const auth_token = localStorage.getItem('auth_token') ?? null;
       
-      this.forecast = null;
-      this.history = null;
+      this.clearAll();
+
       this.loading_search = true;
-      this.error_message = null;
 
       axios
         .post('/api/v1/search', {
@@ -424,6 +434,14 @@ getHistory() {
       const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
       const index = Math.round(degrees / 22.5) % 16;
       return directions[index];
+    },
+
+    clearAll() {
+      this.weather = null;
+      this.forecast = null;
+      this.history = null;
+      this.searchResults = null;
+      this.error_message = null;
     },
 
   },
@@ -598,5 +616,32 @@ getHistory() {
   width: 20px;
   color: #6c757d;
   margin-right: 10px;
+}
+
+.search-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.search-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.search-card-header {
+  padding: 15px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-card-body {
+  padding: 15px;
 }
 </style>
