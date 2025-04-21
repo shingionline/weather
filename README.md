@@ -61,7 +61,7 @@ Use the provided **Postman collection** to test the API:
 
 ## 🌟 Features
 
-- ✅ Responsive UI
+- ✅ Mobile and desktop friendly responsive UI
 - ✅ API rate limit: **41 requests/hour**
 - ✅ Secured with **personal access tokens**
 - ✅ Normalized **database schema with indexes**
