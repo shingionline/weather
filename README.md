@@ -48,10 +48,10 @@ Visit the dashboard and either **register** or **login** with your account to ac
 Use the provided **Postman collection** to test the API:
 
 - `POST /api/v1/login`
-- `GET  /api/v1/weather`
-- `GET  /api/v1/forecast`
-- `GET  /api/v1/history`
-- `GET  /api/v1/search`
+- `POST  /api/v1/weather`
+- `POST  /api/v1/forecast`
+- `POST  /api/v1/history`
+- `POST  /api/v1/search`
 - `GET  /api/v1/user`
 - `POST /api/v1/register`
 - `POST /api/v1/logout`
@@ -81,9 +81,3 @@ Use the provided **Postman collection** to test the API:
 - ❌ Interactive maps
 - ❌ Dynamic charts
 - ❌ Real-time updates
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
