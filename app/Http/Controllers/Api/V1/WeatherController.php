@@ -7,6 +7,7 @@ use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class WeatherController extends Controller
 {
@@ -35,13 +36,15 @@ class WeatherController extends Controller
             }
 
             $endpoint = 'https://api.openweathermap.org/data/2.5/weather?q='.$city.'&APPID=' . $this->api_key;
-            
-            $response = $this->client->get($endpoint);
-            $data = json_decode($response->getBody(), true);
+
+            $cacheKey = 'weather_' . md5($endpoint);
+
+            $dataObject = $this->getDataFromCache($endpoint, $cacheKey);
             
             return response()->json([
                 'success' => true,
-                'data' => $data
+                'source' => $dataObject->source,
+                'data' => $dataObject->data,
             ]);
 
         } catch (Exception $e) {
@@ -71,12 +74,14 @@ class WeatherController extends Controller
 
             $endpoint = 'https://api.openweathermap.org/data/2.5/forecast?q='.$city.'&APPID=' . $this->api_key;
             
-            $response = $this->client->get($endpoint);
-            $data = json_decode($response->getBody(), true);
+            $cacheKey = 'forecast_' . md5($endpoint);
+
+            $dataObject = $this->getDataFromCache($endpoint, $cacheKey);
             
             return response()->json([
                 'success' => true,
-                'data' => $data
+                'source' => $dataObject->source,
+                'data' => $dataObject->data
             ]);
 
         } catch (Exception $e) {
@@ -117,12 +122,14 @@ class WeatherController extends Controller
 
             $endpoint = 'https://api.openweathermap.org/data/3.0/onecall/timemachine?lat='.$latitude.'&lon='.$longitude.'&dt='.$timestamp.'&appid=' . $this->api_key;
             
-            $response = $this->client->get($endpoint);
-            $data = json_decode($response->getBody(), true);
+            $cacheKey = 'history_' . md5($endpoint);
+
+            $dataObject = $this->getDataFromCache($endpoint, $cacheKey);
             
             return response()->json([
                 'success' => true,
-                'data' => $data
+                'source' => $dataObject->source,
+                'data' => $dataObject->data,
             ]);
 
         } catch (Exception $e) {
@@ -151,12 +158,14 @@ class WeatherController extends Controller
 
             $endpoint = 'https://api.openweathermap.org/geo/1.0/direct?q='.$searchTerm.'&limit='.$limit.'&appid=' . $this->api_key;
             
-            $response = $this->client->get($endpoint);
-            $data = json_decode($response->getBody(), true);
+            $cacheKey = 'search_' . md5($endpoint);
+
+            $dataObject = $this->getDataFromCache($endpoint, $cacheKey);
             
             return response()->json([
                 'success' => true,
-                'data' => $data
+                'source' => $dataObject->source,
+                'data' => $dataObject->data,
             ]);
 
         } catch (Exception $e) {
@@ -167,5 +176,24 @@ class WeatherController extends Controller
                 'message' => $errorMessage
             ]);
         }
+    }
+
+    public function getDataFromCache($endpoint, $cacheKey)
+    {
+        // Check if data is cached
+        if (Cache::has($cacheKey)) {
+            $dataArray = ['data' => Cache::get($cacheKey), 'source' => 'cache'];
+            return json_decode(json_encode($dataArray));
+        }
+
+        // If not cached, make the API request
+        $response = $this->client->get($endpoint);
+        $data = json_decode($response->getBody(), true);
+
+        // Cache the data for 1 hour
+        Cache::put($cacheKey, $data, 3600);
+
+        $dataArray = ['data' => $data, 'source' => 'api'];
+        return json_decode(json_encode($dataArray));
     }
 }

@@ -54,6 +54,10 @@
         <div class="col-md-6">
           <div class="weather-details">
             <div class="detail-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Location: {{ weather.coord.lat }}°N, {{ weather.coord.lon }}°E</span>
+            </div>
+            <div class="detail-item">
               <i class="fas fa-temperature-high"></i>
               <span>Feels like: {{ Math.round(weather.main.feels_like - 273.15) }}°C</span>
             </div>
@@ -112,10 +116,72 @@
 </div>
 
 <div v-if="loading_history" class="text-center my-4"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
-<div v-else-if="history" class="mt-2 mb-4">
-  <h5>History</h5>
-  {{history}}
+<div v-else-if="history" class="history-section mt-2 mb-4">
+  <h5 class="mb-3">Historical Weather</h5>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="d-flex align-items-center">
+            <img :src="`https://openweathermap.org/img/wn/${history.data[0].weather[0].icon}@2x.png`" 
+                 :alt="history.data[0].weather[0].description"
+                 class="history-icon">
+            <div>
+              <h3 class="mb-0">{{ Math.round(history.data[0].temp - 273.15) }}°C</h3>
+              <p class="text-capitalize">{{ history.data[0].weather[0].description }}</p>
+            </div>
+          </div>
+          <div class="history-time mt-3">
+            <div class="detail-item">
+              <i class="fas fa-calendar"></i>
+              <span>{{ formatHistoryDate(history.data[0].dt) }}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-clock"></i>
+              <span>{{ formatHistoryTime(history.data[0].dt) }}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-globe"></i>
+              <span>{{ history.timezone }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="history-details">
+            <div class="detail-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Location: {{ history.lat }}°N, {{ history.lon }}°E</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-temperature-high"></i>
+              <span>Feels like: {{ Math.round(history.data[0].feels_like - 273.15) }}°C</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-tint"></i>
+              <span>Humidity: {{ history.data[0].humidity }}%</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-wind"></i>
+              <span>Wind: {{ history.data[0].wind_speed }} m/s ({{ getWindDirection(history.data[0].wind_deg) }})</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-compress-arrows-alt"></i>
+              <span>Pressure: {{ history.data[0].pressure }} hPa</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-eye"></i>
+              <span>Visibility: {{ history.data[0].visibility / 1000 }} km</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-cloud"></i>
+              <span>Clouds: {{ history.data[0].clouds }}%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
 <div v-if="loading_search" class="text-center my-4"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
 <div v-else-if="searchResults" class="mt-2 mb-4">
@@ -346,6 +412,19 @@ getHistory() {
       const date = new Date(dt_txt);
       return date.toLocaleDateString([], { month: 'short', day: 'numeric' });
     },
+    formatHistoryDate(timestamp) {
+      const date = new Date(timestamp * 1000);
+      return date.toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    },
+    formatHistoryTime(timestamp) {
+      const date = new Date(timestamp * 1000);
+      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+    },
+    getWindDirection(degrees) {
+      const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+      const index = Math.round(degrees / 22.5) % 16;
+      return directions[index];
+    },
 
   },
 
@@ -486,5 +565,38 @@ getHistory() {
 .forecast-details .detail-item i {
   width: 20px;
   margin-right: 5px;
+}
+
+.history-section .card {
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.history-section .card-body {
+  padding: 20px;
+}
+
+.history-icon {
+  width: 100px;
+  height: 100px;
+  margin-right: 15px;
+}
+
+.history-time {
+  margin-top: 15px;
+}
+
+.history-details {
+  margin-top: 20px;
+}
+
+.history-time .detail-item {
+  margin-bottom: 8px;
+}
+
+.history-time .detail-item i {
+  width: 20px;
+  color: #6c757d;
+  margin-right: 10px;
 }
 </style>
