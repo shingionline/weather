@@ -39,7 +39,7 @@ A Laravel-based weather dashboard and API platform with user authentication, rat
 
 ## 🔐 Authentication
 
-Visit the dashboard and either **register** or **login** with your account to access weather data.
+Visit the dashboard and **register** or **login** to access weather dashboard.
 
 ## 📥 Postman Collection
 
