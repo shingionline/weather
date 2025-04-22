@@ -62,7 +62,7 @@ A Laravel-based weather dashboard and API platform with user authentication, rat
    sail artisan migrate
    ```
 
-❗ If you get `SQLSTATE[HY000] [2002] Connection refused`, it's because Docker has not fully loaded. Please try again after a few seconds.
+❗ If you get `SQLSTATE[HY000] [2002] Connection refused` it's because Docker has not fully loaded. Please try again after a few seconds.
 
 ## 🛠️ Dashboard
 
