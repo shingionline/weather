@@ -36,9 +36,8 @@ class WebController extends Controller
 
             if (!$token) {
                 return response()->json([
-                    'success' => false,
                     'message' => 'Invalid token'
-                ]);
+                ], 401);
             }
 
             // Get the user from the token
@@ -47,14 +46,12 @@ class WebController extends Controller
             Auth::login($user);
 
             return response()->json([
-                'success' => true,
                 'url' => '/home'
             ]);
         } catch (Exception $e) {
             return response()->json([
-                'success' => false,
                 'message' => $e->getMessage()
-            ]);
+            ], 500);
         }
     }
 

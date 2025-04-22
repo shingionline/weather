@@ -92,18 +92,12 @@ export default {
             password: this.password,
             })
           .then((response) => {
-            
-            if (response.data.success) {
                 this.auth_token = response.data.token;
                 localStorage.setItem('auth_token', this.auth_token);
                 this.webLogin();
-            }
-
-            else {
-              this.error_message = response.data.message;
-              this.loading = false;
-            }
-
+          }).catch((error) => {
+                this.error_message = error.response.data.message;
+                this.loading = false;
           });
 
           }
@@ -115,16 +109,10 @@ export default {
           axios
           .post('/web-login', {auth_token: this.auth_token})
           .then((response) => {
-            
-            if(response.data.success) {
               window.location.href = response.data.url;
-            }
-
-            else {
-              this.error_message = response.data.message;
+          }).catch((error) => {
+              this.error_message = error.response.data.message;
               this.loading = false;
-            }
-
           });
 
         },

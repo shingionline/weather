@@ -34,19 +34,17 @@ class AuthController extends Controller
                 $token = $user->createToken('auth_token')->plainTextToken;
 
                 return response()->json([
-                    'success' => true,
                     'token' => $token,
                     'url' => '/home'
                 ]);
             } else {
                 return response()->json([
-                    'success' => false,
                     'message' => 'Incorrect login details'
-                ]);
+                ], 401);
             }
         } catch (Exception $e) {
             return response()->json(
-                ['success' => false, 'message' => $e->getMessage()]);
+                [ 'message' => $e->getMessage() ], 500);
         }
     }
 
@@ -63,12 +61,12 @@ class AuthController extends Controller
             // check if email is valid
             if (!filter_var($email, FILTER_VALIDATE_EMAIL))
                 return response()->json(
-            ['success' => false, 'message' => 'Please enter a valid email address']);
+            [ 'message' => 'Please enter a valid email address'], 400);
 
             // check if email is registered
             $check = User::where('email', $email)->first();
             if (!empty($check))
-                return response()->json(['success' => false, 'message' => 'Account already exists with this email']);
+                return response()->json([ 'message' => 'Account already exists with this email'], 400);
 
             $register = new Register();
             $user = $register->createUser($name, $surname, $email, $password);
@@ -77,12 +75,11 @@ class AuthController extends Controller
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return response()->json([
-                'success' => true,
                 'token' => $token,
                 'url' => '/home'
             ]);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+            return response()->json([ 'message' => $e->getMessage()], 500);
         }
     }
 
@@ -92,11 +89,10 @@ class AuthController extends Controller
             Session::flush();
             $request->user()->tokens()->delete();
             return response()->json([
-                'success' => true,
                 'message' => 'Logged out successfully'
             ]);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+            return response()->json([ 'message' => $e->getMessage()], 500);
         }
     }
 }
