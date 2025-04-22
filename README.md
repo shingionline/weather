@@ -24,15 +24,21 @@ A Laravel-based weather dashboard and API platform with user authentication, rat
    npm run dev
    ```
 
-4. Run migrations
+4. Start the app using Docker
+   ```bash
+   docker-compose up -d
+   ```
+
+5. Set permissions
+   ```bash
+   sudo chmod -R 775 storage bootstrap/cache
+   ```
+
+6. Run migrations
    ```bash
    php artisan migrate
    ```
 
-5. Start the app using Docker
-   ```bash
-   docker-compose up -d
-   ```
 
 > The weather app will be available on **http://localhost:8000**
 
