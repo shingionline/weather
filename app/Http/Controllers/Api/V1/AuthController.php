@@ -42,13 +42,11 @@ class AuthController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'Incorrect login details'
-                ], 401);
+                ]);
             }
         } catch (Exception $e) {
             return response()->json(
-                ['success' => false, 
-                'message' => $e->getMessage()
-            ], 500);
+                ['success' => false, 'message' => $e->getMessage()]);
         }
     }
 
@@ -65,12 +63,12 @@ class AuthController extends Controller
             // check if email is valid
             if (!filter_var($email, FILTER_VALIDATE_EMAIL))
                 return response()->json(
-            ['success' => false, 'message' => 'Please enter a valid email address'], 400);
+            ['success' => false, 'message' => 'Please enter a valid email address']);
 
             // check if email is registered
             $check = User::where('email', $email)->first();
             if (!empty($check))
-                return response()->json(['success' => false, 'message' => 'Account already exists with this email'], 400);
+                return response()->json(['success' => false, 'message' => 'Account already exists with this email']);
 
             $register = new Register();
             $user = $register->createUser($name, $surname, $email, $password);
@@ -84,7 +82,7 @@ class AuthController extends Controller
                 'url' => '/home'
             ]);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
 
@@ -98,7 +96,7 @@ class AuthController extends Controller
                 'message' => 'Logged out successfully'
             ]);
         } catch (Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
 }

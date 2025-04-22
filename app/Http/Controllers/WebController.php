@@ -38,7 +38,7 @@ class WebController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'Invalid token'
-                ], 401);
+                ]);
             }
 
             // Get the user from the token
@@ -54,7 +54,7 @@ class WebController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage()
-            ], 500);
+            ]);
         }
     }
 
