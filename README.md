@@ -75,7 +75,7 @@ The weather app will be available on **http://localhost:8000**
 
 ## 📥 Postman Collection
 
-[Download Postman Collection](https://res.cloudinary.com/web900/raw/upload/v1745228547/files/yeyweaccefxjmfndryzp.json)
+[Download Postman Collection](https://res.cloudinary.com/web900/raw/upload/v1745312076/files/kurupmliott2ityqj0s8.json)
 
 
 ## 📬 API Endpoints
