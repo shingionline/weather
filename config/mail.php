@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => 'smtp',
 
     /*
     |--------------------------------------------------------------------------
@@ -34,89 +34,6 @@ return [
     */
 
     'mailers' => [
-        'smtp' => [
-            'transport' => 'smtp',
-            'host' => 'smtp.postmarkapp.com',
-            'port' => 587,
-            'encryption' => 'tls',
-            'username' => 'c710ac33-3aa6-4878-8d56-cde7a20caf10',
-            'password' => 'c710ac33-3aa6-4878-8d56-cde7a20caf10',
-            'timeout' => null,
-            'auth_mode' => null,
-            'verify_peer' => false,
-        ],
-
-        'cpanel' => [
-            'transport' => 'smtp',
-            'host' => 'cp54.domains.co.za',
-            'port' => 465,
-            'encryption' => 'ssl',
-            'username' => 'info@overshop.co.za',
-            'password' => 'M.ush1p3',
-            'timeout' => null,
-            'auth_mode' => null,
-            'verify_peer' => false,
-        ],
-
-        'amelia' => [
-            'transport' => 'smtp',
-            'host' => 'cp54.domains.co.za',
-            'port' => 465,
-            'encryption' => 'ssl',
-            'username' => 'amelia.davies@overshop.co.za',
-            'password' => 'M.ush1p3',
-            'timeout' => null,
-            'auth_mode' => null,
-            'verify_peer' => false,
-        ],
-
-        'gmail' => [
-            'transport' => 'smtp',
-            'host' => 'smtp.gmail.com',
-            'port' => 465,
-            'encryption' => 'ssl',
-            'username' => 'shingi2009@gmail.com',
-            'password' => 'rmrcfybipkccsjpi',
-            'timeout' => null,
-            'auth_mode' => null,
-            'verify_peer' => false,
-        ],
-
-        'overshopmailer' => [
-            'transport' => 'smtp',
-            'host' => 'smtp.gmail.com',
-            'port' => 465,
-            'encryption' => 'ssl',
-            'username' => 'hello@overshopmailer.com',
-            'password' => 'inlycfxwjbgsdnjz',
-            'timeout' => null,
-            'auth_mode' => null,
-            'verify_peer' => false,
-        ],
-
-        'overshop' => [
-            'transport' => 'smtp',
-            'host' => 'smtp.gmail.com',
-            'port' => 465,
-            'encryption' => 'ssl',
-            'username' => 'hello@overshop.com',
-            'password' => 'ahlpqhwamsswzeji ',
-            'timeout' => null,
-            'auth_mode' => null,
-            'verify_peer' => false,
-        ],
-
-        'mailtrap' => [
-            'transport' => 'smtp',
-            'host' => 'sandbox.smtp.mailtrap.io',
-            'port' => 2525,
-            'encryption' => 'tls',
-            'username' => '318f09fe29e7fe',
-            'password' => '2d8ecb35e71193',
-            'timeout' => null,
-            'auth_mode' => null,
-            'verify_peer' => false,
-        ],
 
         'ses' => [
             'transport' => 'ses',
@@ -137,7 +54,7 @@ return [
 
         'log' => [
             'transport' => 'log',
-            'channel' => env('MAIL_LOG_CHANNEL'),
+            'channel' => '',
         ],
 
         'array' => [
@@ -165,8 +82,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => '',
+        'name' => '',
     ],
 
     // 'stream' => [
@@ -191,9 +108,7 @@ return [
     'markdown' => [
         'theme' => 'default',
 
-        'paths' => [
-            resource_path('views/vendor/mail'),
-        ],
+        'paths' => [],
     ],
 
 ];
