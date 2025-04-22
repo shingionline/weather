@@ -4,6 +4,29 @@ A Laravel-based weather dashboard and API platform with user authentication, rat
 
 ![Weather App Screenshot](https://res.cloudinary.com/web900/image/upload/v1745230615/files/avqyxl4z0vezcbi5czbo.png)
 
+## 🌟 Features
+
+- ✅ Mobile and desktop friendly responsive UI
+- ✅ API rate limit: **41 requests/hour**
+- ✅ Search for weather by **city** or **coordinates**
+- ✅ Secured with **personal access tokens**
+- ✅ Normalized **database schema with indexes**
+- ✅ API request **caching**
+- ✅ Weather **location search**
+- ✅ **User authentication**
+- ✅ **Versioned API**
+- ✅ **Postman collection** included
+- ✅ Uses **.env** to secure environment variables
+- ✅ **HTTPS & secure headers** (production only)
+- ✅ **Dockerized** setup with `docker-compose.yml`
+
+## ⛔ Not Implemented (Due to Time Constraints)
+
+- ❌ Data aggregation
+- ❌ Interactive maps
+- ❌ Dynamic charts
+- ❌ Real-time updates
+
 
 ## 🚀 Installation
 
@@ -39,7 +62,6 @@ A Laravel-based weather dashboard and API platform with user authentication, rat
    sail artisan migrate
    ```
 
-
 > The weather app will be available on **http://localhost:8000**
 
 
@@ -64,26 +86,3 @@ Use the provided **Postman collection** to test the API
 - `GET  /api/v1/user`
 - `POST /api/v1/register`
 - `POST /api/v1/logout`
-
-## 🌟 Features
-
-- ✅ Mobile and desktop friendly responsive UI
-- ✅ API rate limit: **41 requests/hour**
-- ✅ Search for weather by **city** or **coordinates**
-- ✅ Secured with **personal access tokens**
-- ✅ Normalized **database schema with indexes**
-- ✅ API request **caching**
-- ✅ Weather **location search**
-- ✅ **User authentication**
-- ✅ **Versioned API**
-- ✅ **Postman collection** included
-- ✅ Uses **.env** to secure environment variables
-- ✅ **HTTPS & secure headers** (production only)
-- ✅ **Dockerized** setup with `docker-compose.yml`
-
-## ⛔ Not Implemented (Due to Time Constraints)
-
-- ❌ Data aggregation
-- ❌ Interactive maps
-- ❌ Dynamic charts
-- ❌ Real-time updates
