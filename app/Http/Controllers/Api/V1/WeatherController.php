@@ -35,18 +35,26 @@ class WeatherController extends Controller
                 ]);
             }
 
-            $endpoint = 'https://api.openweathermap.org/data/2.5/weather?q='.$city.'&APPID=' . $this->api_key;
+            if ($city) {
+                $endpoint = 'https://api.openweathermap.org/data/2.5/weather?q=' . $city . '&APPID=' . $this->api_key;
+            } else if ($longitude && $latitude) {
+                $endpoint = 'https://api.openweathermap.org/data/2.5/weather?lat=' . $latitude . '&lon=' . $longitude . '&APPID=' . $this->api_key;
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please provide a city or both coordinates'
+                ]);
+            }
 
             $cacheKey = 'weather_' . md5($endpoint);
 
             $dataObject = $this->getDataFromCache($endpoint, $cacheKey);
-            
+
             return response()->json([
                 'success' => true,
                 'source' => $dataObject->source,
                 'data' => $dataObject->data,
             ]);
-
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
 
@@ -72,18 +80,26 @@ class WeatherController extends Controller
                 ]);
             }
 
-            $endpoint = 'https://api.openweathermap.org/data/2.5/forecast?q='.$city.'&APPID=' . $this->api_key;
-            
+            if ($city) {
+                $endpoint = 'https://api.openweathermap.org/data/2.5/forecast?q=' . $city . '&APPID=' . $this->api_key;
+            } else if ($longitude && $latitude) {
+                $endpoint = 'https://api.openweathermap.org/data/2.5/forecast?lat=' . $latitude . '&lon=' . $longitude . '&APPID=' . $this->api_key;
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please provide a city or both coordinates'
+                ]);
+            }
+
             $cacheKey = 'forecast_' . md5($endpoint);
 
             $dataObject = $this->getDataFromCache($endpoint, $cacheKey);
-            
+
             return response()->json([
                 'success' => true,
                 'source' => $dataObject->source,
                 'data' => $dataObject->data
             ]);
-
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
 
@@ -120,18 +136,17 @@ class WeatherController extends Controller
                 ]);
             }
 
-            $endpoint = 'https://api.openweathermap.org/data/3.0/onecall/timemachine?lat='.$latitude.'&lon='.$longitude.'&dt='.$timestamp.'&appid=' . $this->api_key;
-            
+            $endpoint = 'https://api.openweathermap.org/data/3.0/onecall/timemachine?lat=' . $latitude . '&lon=' . $longitude . '&dt=' . $timestamp . '&appid=' . $this->api_key;
+
             $cacheKey = 'history_' . md5($endpoint);
 
             $dataObject = $this->getDataFromCache($endpoint, $cacheKey);
-            
+
             return response()->json([
                 'success' => true,
                 'source' => $dataObject->source,
                 'data' => $dataObject->data,
             ]);
-
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
 
@@ -156,18 +171,17 @@ class WeatherController extends Controller
                 ]);
             }
 
-            $endpoint = 'https://api.openweathermap.org/geo/1.0/direct?q='.$searchTerm.'&limit='.$limit.'&appid=' . $this->api_key;
-            
+            $endpoint = 'https://api.openweathermap.org/geo/1.0/direct?q=' . $searchTerm . '&limit=' . $limit . '&appid=' . $this->api_key;
+
             $cacheKey = 'search_' . md5($endpoint);
 
             $dataObject = $this->getDataFromCache($endpoint, $cacheKey);
-            
+
             return response()->json([
                 'success' => true,
                 'source' => $dataObject->source,
                 'data' => $dataObject->data,
             ]);
-
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
 

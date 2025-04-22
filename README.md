@@ -69,6 +69,7 @@ Use the provided **Postman collection** to test the API
 
 - ✅ Mobile and desktop friendly responsive UI
 - ✅ API rate limit: **41 requests/hour**
+- ✅ Search for weather by **city** or **coordinates**
 - ✅ Secured with **personal access tokens**
 - ✅ Normalized **database schema with indexes**
 - ✅ API request **caching**
