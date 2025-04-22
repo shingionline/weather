@@ -78,12 +78,8 @@ export default {
           .then((response) => {
             
             if(response.data.success) {
-
               this.auth_token = response.data.token;
-
-              // store the token in local storage
               localStorage.setItem('auth_token', this.auth_token);
-
               this.webLogin();
             }
 

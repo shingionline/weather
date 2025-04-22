@@ -71,9 +71,6 @@ class AuthController extends Controller
             $register = new Register();
             $user = $register->createUser($name, $surname, $email, $password);
 
-            // login the user
-            Auth::login($user);
-
             // create token
             $token = $user->createToken('auth_token')->plainTextToken;
 

@@ -36,7 +36,7 @@ A Laravel-based weather dashboard and API platform with user authentication, rat
 
 6. Run migrations
    ```bash
-   php artisan migrate
+   sail artisan migrate
    ```
 
 

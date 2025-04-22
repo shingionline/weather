@@ -65,6 +65,7 @@ export default {
       success_message: '',
       loading: false,
       submitted: false,
+      auth_token: null,
     };
   },
 
@@ -93,7 +94,9 @@ export default {
           .then((response) => {
             
             if (response.data.success) {
-                window.location.href = response.data.url;
+                this.auth_token = response.data.token;
+                localStorage.setItem('auth_token', this.auth_token);
+                this.webLogin();
             }
 
             else {
@@ -107,6 +110,24 @@ export default {
       
       },
 
+      webLogin() {
+
+          axios
+          .post('/web-login', {auth_token: this.auth_token})
+          .then((response) => {
+            
+            if(response.data.success) {
+              window.location.href = response.data.url;
+            }
+
+            else {
+              this.error_message = response.data.message;
+              this.loading = false;
+            }
+
+          });
+
+        },
 
     sweetfire(text) {
 
@@ -117,9 +138,7 @@ export default {
       showCancelButton: true,
       focusConfirm: false,
       cancelButtonText: 'Ok',
-      customClass: {
-              title: "popup-title",
-            },
+      customClass: { title: "popup-title" },
     })
 
     },
