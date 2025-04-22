@@ -32,7 +32,7 @@ class WeatherController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'Please provide a city or coordinates'
-                ]);
+                ], 400);
             }
 
             if ($city) {
@@ -43,7 +43,7 @@ class WeatherController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'Please provide a city or both coordinates'
-                ]);
+                ], 400);
             }
 
             $cacheKey = 'weather_' . md5($endpoint);
@@ -61,7 +61,7 @@ class WeatherController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $errorMessage
-            ]);
+            ], 500);
         }
     }
 
@@ -77,7 +77,7 @@ class WeatherController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'Please provide a city or coordinates'
-                ]);
+                ], 400);
             }
 
             if ($city) {
@@ -88,7 +88,7 @@ class WeatherController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'Please provide a city or both coordinates'
-                ]);
+                ], 400);
             }
 
             $cacheKey = 'forecast_' . md5($endpoint);
@@ -106,7 +106,7 @@ class WeatherController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $errorMessage
-            ]);
+            ], 500);
         }
     }
 
@@ -122,7 +122,7 @@ class WeatherController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'Please provide longitude, latitude, date and time'
-                ]);
+                ], 400);
             }
 
             // convert datestring to timestamp eg: 2025-04-20T19:32
@@ -133,7 +133,7 @@ class WeatherController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'Invalid date format'
-                ]);
+                ], 400);
             }
 
             $endpoint = 'https://api.openweathermap.org/data/3.0/onecall/timemachine?lat=' . $latitude . '&lon=' . $longitude . '&dt=' . $timestamp . '&appid=' . $this->api_key;
@@ -153,7 +153,7 @@ class WeatherController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $errorMessage
-            ]);
+            ], 500);
         }
     }
 
@@ -168,7 +168,7 @@ class WeatherController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'Please enter a search term'
-                ]);
+                ], 400);
             }
 
             $endpoint = 'https://api.openweathermap.org/geo/1.0/direct?q=' . $searchTerm . '&limit=' . $limit . '&appid=' . $this->api_key;
@@ -188,7 +188,7 @@ class WeatherController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $errorMessage
-            ]);
+            ], 500);
         }
     }
 
