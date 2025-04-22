@@ -64,8 +64,9 @@ A Laravel-based weather dashboard and API platform with user authentication, rat
 
 ❗ If you get `SQLSTATE[HY000] [2002] Connection refused`, it's because Docker has not fully loaded. Please try again after a few seconds.
 
+## 🛠️ Dashboard
 
-> The weather app will be available on **http://localhost:8000**
+The weather app will be available on **http://localhost:8000**
 
 
 ## 🔐 Authentication
